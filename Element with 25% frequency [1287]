@@ -1,0 +1,42 @@
+Given an integer array sorted in non-decreasing order, there is exactly one integer in the array that occurs more than 25% of the time, return that integer.
+
+ Ques: https://leetcode.com/problems/element-appearing-more-than-25-in-sorted-array/
+
+Example 1:
+
+Input: arr = [1,2,2,6,6,6,6,7,10]
+Output: 6
+Example 2:
+
+Input: arr = [1,1]
+Output: 1
+
+
+Java Code:
+T.C = O(N) S.C = O(1)
+
+class Solution {
+    public int findSpecialInteger(int[] arr) {
+        int n=arr.length;
+        int maxCount=0;
+        int special=arr[0];
+        int prev=0,current=1;
+        while(current<n){
+            if(arr[current]==arr[prev])
+                current++;
+            else{
+                prev=current;
+                current++;
+            }
+            //difference
+            int diff=current-prev+1;
+            if(diff>(n*0.25)){
+                if(maxCount<diff){
+                    maxCount=diff;
+                    special=arr[prev];
+                }
+            }
+        }
+        return special;
+    }
+}
