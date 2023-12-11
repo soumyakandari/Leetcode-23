@@ -1,0 +1,44 @@
+There is a class with m students and n exams. You are given a 0-indexed m x n integer matrix score, where each row represents one student and score[i][j] denotes the score the ith student got in the jth exam. The matrix score contains distinct integers only.
+
+You are also given an integer k. Sort the students (i.e., the rows of the matrix) by their scores in the kth (0-indexed) exam from the highest to the lowest.
+
+Return the matrix after sorting it.
+
+Ques: https://leetcode.com/problems/sort-the-students-by-their-kth-score/
+
+//Brute Force:
+T.C 0(n3) S.C O(N)
+
+Java Code:
+class Solution {
+    public int[][] sortTheStudents(int[][] score, int k) {
+        int row =score.length;
+        int col= score[0].length;
+        int[][] sortedMatrix= new int[row][col];
+        int[] ranking= new int[row];
+        for(int i=0;i<row;i++){
+                ranking[i]=score[i][k];
+            }
+        Arrays.sort(ranking);
+        int pos=0;
+        //create new matrix
+        while(pos<row){
+        for(int i=0;i<row;i++){
+                //find the student with max score
+                if(score[i][k]==ranking[pos]){
+                    int rank=row-pos-1;
+                    createMatrix(i,rank,score,sortedMatrix);
+                }
+            }
+            pos++;
+        }
+         return sortedMatrix;
+    }
+
+    public void createMatrix(int i, int rank, int[][]score, int[][]sortedMatrix){
+        //forming ans matrix
+        for(int j=0;j<score[0].length;j++){
+            sortedMatrix[rank][j]=score[i][j];
+        }
+    }
+}
